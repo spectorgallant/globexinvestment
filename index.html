@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globex — Premium Crypto Investment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- PARTICLES -->
+<canvas id="particles"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">GLOB<span>EX</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#plans">Plans</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#achievements">Track Record</a></li>
+  </ul>
+  <a href="login.html" class="nav-cta" onclick="openLogin(event)">Client Login</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Live Markets Open · BTC $104,820</div>
+    <h1>Grow Your Wealth<br>With <span class="gold">Crypto</span> <span class="teal">Intelligence</span></h1>
+    <p class="hero-sub">Globex delivers institutional-grade crypto investment strategies with real-time portfolio management, expert brokers, and up to 40% monthly returns.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-primary" onclick="openApply(event)">🚀 Start Investing</a>
+      <a href="#plans" class="btn-secondary">View Plans →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker" id="ticker"></div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item reveal">
+    <div class="stat-num" data-count="2.4">0</div>
+    <div class="stat-label">Billion USD Managed</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-count="48">0</div>
+    <div class="stat-label">Countries Served</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-count="97">0</div>
+    <div class="stat-label">% Client Satisfaction</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-count="12">0</div>
+    <div class="stat-label">Years in Crypto Markets</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-text reveal">
+    <span class="section-tag">Why Globex</span>
+    <h2 class="section-title">The Smarter Way to<br>Invest in Crypto</h2>
+    <p class="section-sub">Globex combines algorithmic trading strategies with expert human oversight to deliver consistent returns in the volatile crypto market.</p>
+    <br>
+    <a href="#" class="btn-primary" style="display:inline-block; margin-top:.5rem;" onclick="openApply(event)">Begin Your Journey</a>
+  </div>
+  <div class="about-visual reveal">
+    <div class="about-cards">
+      <div class="about-card">
+        <div class="about-icon">⚡</div>
+        <h3>Lightning Fast</h3>
+        <p>Trades executed in milliseconds using our proprietary AI engine.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">🔒</div>
+        <h3>Bank-Grade Security</h3>
+        <p>256-bit encryption with cold storage protection on all assets.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">📊</div>
+        <h3>Live Analytics</h3>
+        <p>Real-time portfolio dashboards updated every 60 seconds.</p>
+      </div>
+      <div class="about-card" style="position:relative;">
+        <div class="about-icon">🌍</div>
+        <h3>Global Reach</h3>
+        <p>Operating across 48+ countries with 24/7 broker support.</p>
+        <div class="about-floating">
+          <div class="icon">💰</div>
+          <div>
+            <div class="label">Today's Yield</div>
+            <div class="value">+$4.2M</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section class="plans" id="plans">
+  <div class="plans-header reveal">
+    <span class="section-tag">Investment Plans</span>
+    <h2 class="section-title">Choose Your Growth Path</h2>
+    <p class="section-sub" style="margin:0 auto;">All plans include a dedicated broker, live dashboard access, and 24/7 support.</p>
+  </div>
+  <div class="plans-grid">
+    <div class="plan-card reveal">
+      <div class="plan-badge">Starter</div>
+      <div class="plan-name">Bronze Plan</div>
+      <div class="plan-roi">10% <span>/ monthly</span></div>
+      <div class="plan-range">Min $500 — Max $4,999</div>
+      <ul class="plan-features">
+        <li>Dedicated Junior Broker</li>
+        <li>Basic Portfolio Dashboard</li>
+        <li>Weekly Performance Report</li>
+        <li>Email Support (24–48hrs)</li>
+        <li>BTC & ETH Trading</li>
+      </ul>
+      <a href="#" class="plan-btn" onclick="openApply(event)">Start with Bronze</a>
+    </div>
+    <div class="plan-card featured reveal">
+      <div class="plan-badge">Most Popular</div>
+      <div class="plan-name">Silver Plan</div>
+      <div class="plan-roi">22% <span>/ monthly</span></div>
+      <div class="plan-range">Min $5,000 — Max $49,999</div>
+      <ul class="plan-features">
+        <li>Senior Dedicated Broker</li>
+        <li>Full Portfolio Dashboard</li>
+        <li>Daily Performance Reports</li>
+        <li>Priority Support (2–4hrs)</li>
+        <li>Top 10 Crypto Trading</li>
+        <li>Compound Interest Option</li>
+      </ul>
+      <a href="#" class="plan-btn" onclick="openApply(event)">Start with Silver</a>
+    </div>
+    <div class="plan-card reveal">
+      <div class="plan-badge">Premium</div>
+      <div class="plan-name">Gold Plan</div>
+      <div class="plan-roi">35% <span>/ monthly</span></div>
+      <div class="plan-range">Min $50,000 — Max $499,999</div>
+      <ul class="plan-features">
+        <li>Elite Private Broker</li>
+        <li>Advanced Analytics Suite</li>
+        <li>Real-time Alerts</li>
+        <li>VIP Support (1hr response)</li>
+        <li>Full Crypto Market Access</li>
+        <li>Auto-compounding</li>
+      </ul>
+      <a href="#" class="plan-btn" onclick="openApply(event)">Start with Gold</a>
+    </div>
+    <div class="plan-card reveal">
+      <div class="plan-badge">Elite</div>
+      <div class="plan-name">Platinum Plan</div>
+      <div class="plan-roi">40%+ <span>/ monthly</span></div>
+      <div class="plan-range">Min $500,000+</div>
+      <ul class="plan-features">
+        <li>Personal Wealth Manager</li>
+        <li>Custom Strategy Suite</li>
+        <li>Dedicated Account Team</li>
+        <li>Instant Phone Support</li>
+        <li>Exclusive DeFi Access</li>
+        <li>Quarterly In-person Review</li>
+      </ul>
+      <a href="#" class="plan-btn" onclick="openApply(event)">Apply for Platinum</a>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="achievements" id="achievements">
+  <div class="achievements-inner">
+    <div class="achievements-header reveal">
+      <span class="section-tag">Track Record</span>
+      <h2 class="section-title">Extraordinary Results</h2>
+      <p class="section-sub" style="margin:0 auto;">A decade of consistent performance that speaks for itself.</p>
+    </div>
+    <div class="ach-grid">
+      <div class="ach-card reveal"><div class="ach-icon">🏆</div><div class="ach-num">$2.4B+</div><div class="ach-label">Total Funds Managed</div></div>
+      <div class="ach-card reveal"><div class="ach-icon">📈</div><div class="ach-num">38%</div><div class="ach-label">Avg Monthly ROI (2024)</div></div>
+      <div class="ach-card reveal"><div class="ach-icon">👥</div><div class="ach-num">18,400+</div><div class="ach-label">Active Investors</div></div>
+      <div class="ach-card reveal"><div class="ach-icon">🌐</div><div class="ach-num">48</div><div class="ach-label">Countries Served</div></div>
+      <div class="ach-card reveal"><div class="ach-icon">🔐</div><div class="ach-num">0</div><div class="ach-label">Security Breaches Ever</div></div>
+      <div class="ach-card reveal"><div class="ach-icon">⭐</div><div class="ach-num">4.97/5</div><div class="ach-label">Average Client Rating</div></div>
+      <div class="ach-card reveal"><div class="ach-icon">💎</div><div class="ach-num">$840M</div><div class="ach-label">Profits Paid Out (2024)</div></div>
+      <div class="ach-card reveal"><div class="ach-icon">🕐</div><div class="ach-num">24/7</div><div class="ach-label">Market Monitoring</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="reviews-header reveal">
+    <span class="section-tag">Client Reviews</span>
+    <h2 class="section-title">What Our Investors Say</h2>
+  </div>
+  <div style="overflow:hidden;">
+    <div class="reviews-track" id="reviewsTrack"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div style="position:relative;z-index:2;">
+    <span class="section-tag">Ready to Start?</span>
+    <h2>Your Wealth Journey<br>Begins <span style="color:var(--gold)">Today</span></h2>
+    <p>Join over 18,000 investors already growing their portfolio with Globex. A dedicated broker will contact you within 24 hours.</p>
+    <a href="#" class="btn-primary" style="font-size:1.1rem; padding:1.1rem 3rem;" onclick="openApply(event)">🚀 Start Investing Now</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo" style="font-size:1.4rem;">GLOB<span style="color:var(--gold)">EX</span></div>
+      <p>Institutional-grade crypto investment with human expertise. Your financial growth is our mission.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Our Team</a>
+      <a href="#">Careers</a>
+      <a href="mailto:support@globex.com">Email Support</a>
+    </div>
+    <div class="footer-col">
+      <h4>Invest</h4>
+      <a href="#">Plans</a>
+      <a href="#" onclick="openApply(event)">Apply Now</a>
+      <a href="#">Calculator</a>
+      <a href="#">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Risk Disclosure</a>
+      <a href="#">Compliance</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Globex Investments. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- APPLY MODAL -->
+<div class="modal-overlay" id="applyModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('applyModal')">✕</button>
+    <div id="applyForm">
+      <h2>Start Investing</h2>
+      <p class="sub">Fill in your details below. A Globex broker will contact you within 24 hours to set up your account.</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="John" id="fname">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Smith" id="lname">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="john@example.com" id="email">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="+1 (555) 000-0000" id="phone">
+      </div>
+      <div class="form-group">
+        <label>Country</label>
+        <select id="country">
+          <option value="">Select your country</option>
+          <option>United States</option><option>United Kingdom</option>
+          <option>Canada</option><option>Australia</option>
+          <option>Germany</option><option>France</option>
+          <option>UAE</option><option>Singapore</option>
+          <option>South Africa</option><option>Nigeria</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Investment Plan</label>
+        <select id="plan">
+          <option value="">Select a plan</option>
+          <option>Bronze — 10% Monthly ($500–$4,999)</option>
+          <option>Silver — 22% Monthly ($5,000–$49,999)</option>
+          <option>Gold — 35% Monthly ($50,000–$499,999)</option>
+          <option>Platinum — 40%+ Monthly ($500,000+)</option>
+        </select>
+      </div>
+      <div class="form-group">
+  <label>Starting Deposit ($)</label>
+  <input type="text" id="deposit" placeholder="e.g. 5,000" class="form-control">
+</div>
+      <div class="form-group">
+        <label>How did you hear about us?</label>
+        <select>
+          <option>Social Media</option><option>Referral</option>
+          <option>Search Engine</option><option>Advertisement</option><option>Other</option>
+        </select>
+      </div>
+      <button class="btn-submit" onclick="submitApplication()">Submit Application →</button>
+    </div>
+    <div class="success-msg" id="applySuccess">
+      <div class="icon">🎉</div>
+      <h3>Application Received!</h3>
+      <p>Thank you for choosing Globex. A dedicated broker will contact you within <strong style="color:var(--gold)">24 hours</strong> to guide you through account setup.</p>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal" style="max-width:420px;">
+    <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
+    <h2>Client Login</h2>
+    <p class="sub">Access your Globex investment dashboard.</p>
+    <div class="login-error" id="loginError">❌ Invalid credentials. Please contact support.</div>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" placeholder="your_username" id="loginUser">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" placeholder="••••••••••" id="loginPass">
+    </div>
+    <button class="btn-submit" onclick="doLogin()">Login to Dashboard →</button>
+  </div>
+</div>
+
+<!-- DASHBOARD OVERLAY -->
+<div class="dashboard-overlay" id="dashboard">
+  <nav class="dash-nav">
+    <div class="logo">GLOB<span>EX</span></div>
+    <div class="dash-user">
+      <div class="dash-avatar" id="dashAvatar">JD</div>
+      <div class="mobile-hide">
+        <div class="dash-username" id="dashName">John Doe</div>
+        <div class="dash-role" id="dashPlan">Gold Plan Investor</div>
+      </div>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">Logout</button>
+  </nav>
+
+  <div class="dash-body">
+    <div class="dash-header">
+        <div>
+            <h2 id="welcomeUser" style="font-family: 'Syne', sans-serif;">Welcome Back, Investor</h2>
+            <p class="muted">Account Status: <span class="gold" style="font-weight: 700; font-size: 0.8rem;">● VERIFIED GOLD</span></p>
+        </div>
+        <div class="dash-main-actions">
+            <!-- We will move these to the new Quick Actions grid below for a better look -->
+        </div>
+    </div>
+
+    <!-- NEW PREMIUM PORTFOLIO CARD -->
+    <div class="main-portfolio-card">
+        <div class="card-chip"></div>
+        <div class="card-content">
+            <p class="dash-card-label">Total Portfolio Value</p>
+            <h2 class="dash-card-value gold" id="dashPortfolio">$0.00</h2>
+            <div class="card-stats">
+                <span class="status-badge status-active">↑ +12.5% Profit</span>
+                <span style="font-size: 0.75rem; opacity: 0.5; margin-left: 10px; letter-spacing: 1px;">ACC: GBX-9928-110</span>
+            </div>
+        </div>
+        <div class="card-vector"></div>
+    </div>
+
+    <!-- NEW QUICK ACTION DOCK -->
+    <div class="quick-actions-grid">
+        <button class="action-btn" onclick="toggleDashSection('deposit')">
+            <div class="icon-circle">📥</div>
+            <span>Deposit</span>
+        </button>
+        <button class="action-btn" onclick="toggleDashSection('withdraw')">
+            <div class="icon-circle">📤</div>
+            <span>Withdraw</span>
+        </button>
+        <button class="action-btn" onclick="window.location.href='mailto:support@globex.com'">
+            <div class="icon-circle">🎧</div>
+            <span>Support</span>
+        </button>
+    </div>
+
+    <div class="dash-cards">
+        <div class="dash-card small-card">
+            <div class="label">Total Profits (P/L)</div>
+            <div class="value teal" id="dashProfit" style="font-size: 1.5rem;">$0.00</div>
+        </div>
+        <div class="dash-card small-card">
+            <div class="label">Asset Allocation</div>
+            <div class="allocation-bar">
+                <div class="bar-fill" style="width: 70%; background: var(--gold);"></div>
+                <div class="bar-fill" style="width: 20%; background: var(--teal);"></div>
+                <div class="bar-fill" style="width: 10%; background: #fff;"></div>
+            </div>
+            <div class="label" style="font-size: 0.6rem; margin-top: 5px;">BTC 70% | ETH 20% | USDT 10%</div>
+        </div>
+    </div>
+
+    <!-- DEPOSIT SECTION -->
+    <div id="depositSection" class="dash-section" style="display:none;">
+      <div class="dash-card featured-card">
+        <div class="section-flex">
+          <h3>Add Funds</h3>
+          <button class="close-btn" onclick="toggleDashSection('none')">✕</button>
+        </div>
+        
+        <div class="deposit-toggle">
+          <button id="tabCrypto" class="active" onclick="showDepositMethod('crypto')">Crypto</button>
+          <button id="tabBroker" onclick="showDepositMethod('broker')">Broker</button>
+        </div>
+
+        <div id="cryptoPayment">
+          <select id="cryptoSelect" onchange="updateCryptoDetails()" class="dash-input">
+            <option value="btc">Bitcoin (BTC)</option>
+            <option value="eth">Ethereum (ETH)</option>
+            <option value="usdt">USDT (TRC20)</option>
+          </select>
+          <div class="qr-display" style="text-align: center; background: rgba(15, 23, 42, 0.5); padding: 25px; border-radius: 15px; border: 1px solid rgba(255,215,0,0.1);">
+    <h4 id="assetLabel" class="gold" style="margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">Bitcoin Address</h4>
+    
+    <!-- This image updates automatically -->
+    <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=1D7X9Q3QcEWVE1daYvFpcRmy7EZTsUoTXH" 
+         alt="Scan QR" 
+         style="border: 8px solid #fff; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);">
+    
+    <div style="display: flex; gap: 10px; background: #000; padding: 5px; border-radius: 8px; border: 1px solid #333;">
+      <input type="text" id="walletAddr" readonly value="1D7X9Q3QcEWVE1daYvFpcRmy7EZTsUoTXH" 
+             style="flex: 1; background: transparent; border: none; color: #fff; padding: 10px; font-family: monospace; font-size: 0.85rem;">
+      <button onclick="copyToClipboard(event)" class="btn-primary" style="white-space: nowrap;">Copy</button>
+    </div>
+</div>
+
+          <button class="btn-confirm-pay" onclick="confirmPayment()">I Have Made Payment →</button>
+        </div>
+
+        <div id="brokerPayment" style="display:none;">
+           <a href="https://wa.me/234XXXXXXXXXX" class="whatsapp-btn">
+             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20"> Message Broker on WhatsApp
+           </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- WITHDRAW SECTION -->
+    <div id="withdrawSection" class="dash-section" style="display:none;">
+      <div class="dash-card">
+        <div class="section-flex">
+          <h3>Withdraw Funds</h3>
+          <button class="close-btn" onclick="toggleDashSection('none')">✕</button>
+        </div>
+        <div class="form-group">
+          <label>Select Coin</label>
+          <select id="withdrawCoin" class="dash-input">
+            <option>Bitcoin (BTC)</option>
+            <option>Ethereum (ETH)</option>
+            <option>USDT (TRC20)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Amount ($)</label>
+          <input type="number" id="withdrawAmount" placeholder="Min $100">
+        </div>
+        <div class="form-group">
+          <label>Destination Wallet Address</label>
+          <input type="text" id="withdrawAddr" placeholder="Paste address here">
+        </div>
+        <button class="btn-submit" onclick="processWithdrawal()">Process Withdrawal</button>
+      </div>
+    </div>
+
+    <!-- TRANSACTIONS -->
+<div class="table-container">
+  <table class="dash-table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Status</th> <!-- Ensure this is here -->
+        </tr>
+    </thead>
+    <tbody id="dashTbody"></tbody>
+  </table>
+</div>
+
+  </div>
+</div>
+
+<!-- WITHDRAWAL SUCCESS POPUP -->
+<div class="modal-overlay" id="withdrawPopup">
+  <div class="modal withdrawal-popup">
+    <div class="check-icon">✓</div>
+    <h2>Request Submitted</h2>
+    <p>Your withdrawal is being processed. You will receive a confirmation email within 24 hours once verified by the blockchain.</p>
+    <button class="btn-submit" onclick="closeModal('withdrawPopup')">Understood</button>
+  </div>
+</div>
+
+<!-- Link to external JS -->
+<script src="script.js"></script>
+</body>
+</html>
