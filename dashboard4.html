@@ -99,6 +99,47 @@
     @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
     @media(max-width:768px){.dash-body{padding:1.5rem 1rem 4rem;}.stat-row{grid-template-columns:1fr 1fr;}.quick-actions{grid-template-columns:repeat(3,1fr);gap:.7rem;}.mobile-hide{display:none;}.dash-table th,.dash-table td{padding:.75rem 1rem;}}
     @media(max-width:480px){.stat-row{grid-template-columns:1fr;}.portfolio-card{padding:1.5rem;}.port-value{font-size:2rem;}}
+    .telegram-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.7rem;
+  background:#229ED9;
+  color:#fff;
+  padding:1rem 1.5rem;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:700;
+  font-family:'Syne',sans-serif;
+  margin-top:1rem;
+  transition:all .25s;
+}
+
+.telegram-btn:hover{
+  background:#1b86bb;
+  transform:translateY(-2px);
+}
+
+.signal-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.7rem;
+  background:#3A76F0;
+  color:#fff;
+  padding:1rem 1.5rem;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:700;
+  font-family:'Syne',sans-serif;
+  margin-top:1rem;
+  transition:all .25s;
+}
+
+.signal-btn:hover{
+  background:#2f63cc;
+  transform:translateY(-2px);
+}
   </style>
 </head>
 <body>
@@ -201,10 +242,26 @@
   </div>
 
   <div id="brokerPayment" style="display:none;">
-    <a href="https://wa.me/12192766737" class="whatsapp-btn">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="22"> Message Broker on WhatsApp
-    </a>
-  </div>
+
+  <!-- WhatsApp -->
+  <a href="https://wa.me/12192766737" class="whatsapp-btn">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="22">
+    WhatsApp Broker
+  </a>
+
+  <!-- Telegram -->
+  <a href="https://t.me/globexinvestments" class="telegram-btn">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="22">
+    Telegram Broker
+  </a>
+
+  <!-- Signal -->
+  <a href="https://signal.me/#p/+17472321537" class="signal-btn">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Signal-Logo.svg" width="22">
+    Signal Broker
+  </a>
+
+</div>
 </div>
 ```
 
