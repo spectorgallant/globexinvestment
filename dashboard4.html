@@ -148,7 +148,7 @@
 <canvas id="particles"></canvas>
 
 <nav class="dash-nav">
-  <a href="index.html" class="logo">GLOB<span>EX</span></a>
+  <a href="/" class="logo">GLOB<span>EX</span></a>
   <div class="dash-user">
     <div class="dash-avatar">SN</div>
     <div class="mobile-hide">
@@ -313,7 +313,7 @@
 <script>
   // ─── Session guard: require login, clear session when leaving ───────────────
   if (!sessionStorage.getItem('globex_user')) {
-    window.location.href = 'login.html';
+    window.location.href = '/login';
   }
 
   // Clear session when user navigates away (back to home or any other page)
@@ -342,7 +342,7 @@
   // ─── Logout ─────────────────────────────────────────────────────────────────
   function doLogout() {
     sessionStorage.removeItem('globex_user');
-    window.location.href = 'index.html';
+    window.location.href = '/';
   }
 
   // ─── Section toggle ─────────────────────────────────────────────────────────
