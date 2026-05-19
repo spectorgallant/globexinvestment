@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply — Globex Investments | KYC Verification</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#F0B429; --gold2:#FFD166; --gold3:#E8A500; --gold-dim:rgba(240,180,41,0.12);
+  --teal:#00E5CC; --teal2:#00C4AE;
+  --dark:#050A12; --dark2:#080F1C; --dark3:#0C1625;
+  --card:#0D1A2A; --card2:#101E30;
+  --border:rgba(240,180,41,0.13); --border2:rgba(255,255,255,0.07);
+  --text:#EEF2F8; --muted:#6B7F99; --muted2:#3D5068;
+  --green:#22C55E; --red:#F87171;
+  --r:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--text);font-family:'Cabinet Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4;}
+.bg-glow{position:fixed;pointer-events:none;z-index:0;}
+.bg-glow-1{top:-20%;left:-10%;width:700px;height:700px;background:radial-gradient(circle,rgba(240,180,41,0.06),transparent 65%);}
+.bg-glow-2{bottom:-30%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,204,0.05),transparent 65%);}
+.navbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:.9rem 2rem;background:rgba(5,10,18,0.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--border2);}
+.logo{font-family:'Clash Display',sans-serif;font-weight:700;font-size:1.4rem;color:var(--text);text-decoration:none;letter-spacing:-.02em;}
+.logo span{color:var(--gold);}
+.nav-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--gold-dim);border:1px solid var(--border);color:var(--gold);font-size:.72rem;font-weight:700;padding:.3rem .85rem;border-radius:50px;letter-spacing:.06em;}
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.nav-link{color:var(--muted);font-size:.85rem;font-weight:600;text-decoration:none;transition:color .2s;}
+.nav-link:hover{color:var(--text);}
+.hero{padding:5rem 2rem 3rem;text-align:center;position:relative;z-index:1;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold-dim);border:1px solid var(--border);color:var(--gold);font-size:.72rem;font-weight:700;padding:.35rem 1rem;border-radius:50px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem;animation:fadeUp .6s .05s both;}
+.hero h1{font-family:'Clash Display',sans-serif;font-weight:700;font-size:clamp(2.2rem,6vw,3.8rem);letter-spacing:-.04em;line-height:1.08;max-width:700px;margin:0 auto 1.2rem;animation:fadeUp .6s .1s both;}
+.hero h1 .highlight{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{color:var(--muted);font-size:1.05rem;max-width:520px;margin:0 auto 2.5rem;line-height:1.7;animation:fadeUp .6s .15s both;}
+.trust-row{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;animation:fadeUp .6s .2s both;}
+.trust-pill{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--muted);font-weight:600;}
+.trust-dot{width:7px;height:7px;border-radius:50%;background:var(--green);}
+.progress-wrap{max-width:720px;margin:3rem auto 0;padding:0 1.5rem;position:relative;z-index:1;animation:fadeUp .6s .25s both;}
+.steps-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;position:relative;}
+.steps-header::before{content:'';position:absolute;top:18px;left:0;right:0;height:2px;background:var(--border2);z-index:0;}
+.steps-line{position:absolute;top:18px;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));z-index:1;transition:width .5s cubic-bezier(.4,0,.2,1);}
+.step-item{display:flex;flex-direction:column;align-items:center;gap:.4rem;z-index:2;}
+.step-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Clash Display',sans-serif;font-weight:700;font-size:.8rem;border:2px solid var(--border2);background:var(--dark2);color:var(--muted);transition:all .4s;}
+.step-circle.done{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+.step-circle.active{background:var(--dark3);border-color:var(--gold);color:var(--gold);box-shadow:0 0 0 4px rgba(240,180,41,0.12);}
+.step-label{font-size:.65rem;font-weight:700;color:var(--muted);letter-spacing:.06em;text-align:center;text-transform:uppercase;transition:color .3s;}
+.step-label.active{color:var(--gold);}
+.step-label.done{color:var(--green);}
+.form-wrapper{max-width:720px;margin:2rem auto 6rem;padding:0 1.5rem;position:relative;z-index:1;}
+.form-panel{background:linear-gradient(145deg,#0E1C2E,#080F1C);border:1px solid var(--border);border-radius:28px;padding:2.5rem;box-shadow:0 40px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.04);animation:panelIn .4s ease;}
+@keyframes panelIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.panel-head{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border2);}
+.panel-step-tag{font-size:.68rem;font-weight:700;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;}
+.panel-head h2{font-family:'Clash Display',sans-serif;font-weight:700;font-size:1.5rem;letter-spacing:-.02em;}
+.panel-head p{color:var(--muted);font-size:.88rem;margin-top:.35rem;line-height:1.6;}
+.form-grid{display:grid;gap:1.1rem;}
+.form-grid-2{grid-template-columns:1fr 1fr;}
+.field-group{display:flex;flex-direction:column;gap:.45rem;}
+.field-group label{font-size:.7rem;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.field-group label span.req{color:var(--gold);margin-left:.2rem;}
+.field-input{background:rgba(255,255,255,0.04);border:1.5px solid var(--border2);border-radius:12px;padding:.85rem 1.1rem;color:var(--text);font-family:'Cabinet Grotesk',sans-serif;font-size:.92rem;font-weight:500;outline:none;transition:border-color .2s,box-shadow .2s,background .2s;width:100%;}
+.field-input:focus{border-color:var(--gold);background:rgba(240,180,41,0.03);box-shadow:0 0 0 4px rgba(240,180,41,0.07);}
+.field-input::placeholder{color:var(--muted2);}
+.field-input option{background:var(--dark2);}
+textarea.field-input{resize:vertical;min-height:90px;}
+.section-divider{display:flex;align-items:center;gap:1rem;margin:1.6rem 0 1.2rem;}
+.section-divider span{font-size:.7rem;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--border2);}
+.upload-zone{border:2px dashed rgba(240,180,41,0.25);border-radius:16px;padding:2.2rem 1.5rem;text-align:center;cursor:pointer;transition:all .3s;background:rgba(240,180,41,0.02);position:relative;}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--gold);background:rgba(240,180,41,0.05);}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-icon{font-size:2.5rem;margin-bottom:.7rem;display:block;}
+.upload-zone h4{font-family:'Clash Display',sans-serif;font-weight:600;font-size:.95rem;margin-bottom:.3rem;}
+.upload-zone p{color:var(--muted);font-size:.78rem;line-height:1.5;}
+.upload-zone .file-types{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-top:.8rem;}
+.file-type-pill{background:var(--card2);border:1px solid var(--border2);padding:.2rem .6rem;border-radius:6px;font-size:.65rem;font-weight:700;color:var(--muted);letter-spacing:.05em;}
+.upload-preview{display:none;align-items:center;gap:.8rem;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.18);border-radius:12px;padding:.8rem 1rem;margin-top:.8rem;}
+.upload-preview.visible{display:flex;}
+.preview-icon{font-size:1.4rem;}
+.preview-info{flex:1;}
+.preview-name{font-weight:700;font-size:.85rem;color:var(--green);}
+.preview-size{font-size:.72rem;color:var(--muted);}
+.preview-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem;padding:.2rem;transition:color .2s;}
+.preview-remove:hover{color:var(--red);}
+.photo-upload-wrap{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+.photo-preview-circle{width:90px;height:90px;border-radius:50%;border:2px dashed rgba(240,180,41,0.3);background:rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;position:relative;cursor:pointer;transition:all .3s;}
+.photo-preview-circle:hover{border-color:var(--gold);}
+.photo-preview-circle input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.photo-preview-circle img{width:100%;height:100%;object-fit:cover;display:none;}
+.photo-preview-circle .photo-placeholder{font-size:2rem;pointer-events:none;}
+.photo-upload-info h4{font-family:'Clash Display',sans-serif;font-weight:600;font-size:.92rem;margin-bottom:.3rem;}
+.photo-upload-info p{color:var(--muted);font-size:.78rem;line-height:1.5;}
+.btn-upload-photo{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold-dim);border:1px solid var(--border);color:var(--gold);padding:.55rem 1.1rem;border-radius:9px;font-family:'Clash Display',sans-serif;font-weight:600;font-size:.78rem;cursor:pointer;transition:all .2s;margin-top:.6rem;}
+.btn-upload-photo:hover{background:rgba(240,180,41,0.18);}
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.9rem;}
+.plan-card{border:2px solid var(--border2);border-radius:16px;padding:1.3rem;cursor:pointer;transition:all .28s;position:relative;overflow:hidden;}
+.plan-card:hover{border-color:rgba(240,180,41,0.3);background:rgba(240,180,41,0.03);}
+.plan-card.selected{border-color:var(--gold);background:rgba(240,180,41,0.06);}
+.plan-card.selected::before{content:'✓';position:absolute;top:.7rem;right:.8rem;width:22px;height:22px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:var(--dark);line-height:22px;text-align:center;}
+.plan-name{font-family:'Clash Display',sans-serif;font-weight:700;font-size:1rem;margin-bottom:.25rem;}
+.plan-roi{color:var(--gold);font-size:.78rem;font-weight:700;margin-bottom:.5rem;}
+.plan-min{color:var(--muted);font-size:.72rem;}
+.plan-card input[type=radio]{position:absolute;opacity:0;}
+.check-row{display:flex;align-items:flex-start;gap:.8rem;cursor:pointer;}
+.check-row input[type=checkbox]{display:none;}
+.custom-check{width:20px;height:20px;border:2px solid var(--border2);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:.1rem;}
+.check-row input:checked + .custom-check{background:var(--gold);border-color:var(--gold);}
+.custom-check::after{content:'✓';font-size:.7rem;font-weight:800;color:var(--dark);display:none;}
+.check-row input:checked + .custom-check::after{display:block;}
+.check-label{font-size:.86rem;color:var(--muted);line-height:1.5;}
+.check-label a{color:var(--gold);text-decoration:none;}
+.btn-row{display:flex;gap:1rem;margin-top:2rem;}
+.btn-back{flex:0 0 auto;padding:.95rem 1.6rem;background:rgba(255,255,255,0.04);border:1.5px solid var(--border2);border-radius:13px;color:var(--muted);font-family:'Clash Display',sans-serif;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .25s;}
+.btn-back:hover{background:rgba(255,255,255,0.07);color:var(--text);}
+.btn-next{flex:1;padding:.95rem 2rem;background:linear-gradient(135deg,var(--gold) 0%,var(--gold3) 100%);border:none;border-radius:13px;color:#0A0800;font-family:'Clash Display',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .3s;box-shadow:0 8px 24px rgba(240,180,41,0.22);display:flex;align-items:center;justify-content:center;gap:.6rem;}
+.btn-next:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(240,180,41,0.32);}
+.btn-next:active{transform:scale(.98);}
+.btn-submit{background:linear-gradient(135deg,var(--teal) 0%,var(--teal2) 100%);color:#02191A;box-shadow:0 8px 24px rgba(0,229,204,0.22);}
+.btn-submit:hover{box-shadow:0 14px 36px rgba(0,229,204,0.32);}
+.success-panel{text-align:center;padding:1rem;}
+.success-anim{width:90px;height:90px;border-radius:50%;background:rgba(0,229,204,0.1);border:2px solid rgba(0,229,204,0.25);display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 1.8rem;animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes popIn{from{opacity:0;transform:scale(.5);}to{opacity:1;transform:scale(1);}}
+.success-panel h2{font-family:'Clash Display',sans-serif;font-weight:700;font-size:1.8rem;margin-bottom:.8rem;letter-spacing:-.02em;}
+.success-panel p{color:var(--muted);font-size:.95rem;line-height:1.7;max-width:420px;margin:0 auto 1.5rem;}
+.ref-box{background:var(--gold-dim);border:1px solid var(--border);border-radius:12px;padding:1rem 1.5rem;display:inline-block;margin:1rem auto;}
+.ref-label{font-size:.68rem;font-weight:700;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem;}
+.ref-id{font-family:'Clash Display',sans-serif;font-weight:700;font-size:1.2rem;color:var(--text);letter-spacing:.05em;}
+.success-steps{display:flex;flex-direction:column;gap:.7rem;max-width:380px;margin:1.8rem auto 0;text-align:left;}
+.success-step{display:flex;align-items:center;gap:.9rem;background:rgba(255,255,255,0.03);border:1px solid var(--border2);border-radius:12px;padding:.9rem 1.1rem;}
+.success-step-icon{width:36px;height:36px;border-radius:50%;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.success-step-text{font-size:.84rem;font-weight:600;}
+.success-step-sub{font-size:.72rem;color:var(--muted);margin-top:.1rem;}
+.footer{border-top:1px solid var(--border2);padding:2rem;text-align:center;position:relative;z-index:1;}
+.footer-logo{font-family:'Clash Display',sans-serif;font-weight:700;font-size:1.2rem;color:var(--text);margin-bottom:.6rem;}
+.footer-logo span{color:var(--gold);}
+.footer p{color:var(--muted2);font-size:.78rem;line-height:1.6;}
+.footer-links{display:flex;justify-content:center;gap:1.5rem;margin-top:.8rem;}
+.footer-links a{color:var(--muted);font-size:.78rem;text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:640px){
+  .form-grid-2{grid-template-columns:1fr;}
+  .form-panel{padding:1.5rem;}
+  .hero{padding:3rem 1.2rem 2rem;}
+  .photo-upload-wrap{flex-direction:column;}
+  .plan-grid{grid-template-columns:1fr 1fr;}
+  .navbar{padding:.85rem 1.2rem;}
+  .btn-row{flex-direction:column-reverse;}
+  .btn-back{width:100%;}
+}
+</style>
+</head>
+<body>
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<nav class="navbar">
+  <a href="index.html" class="logo">GLOB<span>EX</span></a>
+  <div class="nav-badge">🔒 Secure Application</div>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← Back to Home</a>
+    <a href="mailto:supports.globexinvestments@gmail.com" class="nav-link">Support</a>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-eyebrow">📋 Investor Application</div>
+  <h1>Start Your <span class="highlight">Wealth Journey</span><br>With Globex</h1>
+  <p>Complete your KYC verification to unlock your investor account. It takes less than 5 minutes.</p>
+  <div class="trust-row">
+    <div class="trust-pill"><div class="trust-dot"></div> Bank-Level Encryption</div>
+    <div class="trust-pill"><div class="trust-dot"></div> KYC Compliant</div>
+    <div class="trust-pill"><div class="trust-dot"></div> 256-bit SSL Secured</div>
+    <div class="trust-pill"><div class="trust-dot"></div> Regulated Platform</div>
+  </div>
+</section>
+<div class="progress-wrap">
+  <div class="steps-header" id="stepsHeader">
+    <div class="steps-line" id="stepsLine"></div>
+  </div>
+</div>
+<div class="form-wrapper">
+  <div class="form-panel" id="formPanel"></div>
+</div>
+<footer class="footer">
+  <div class="footer-logo">GLOB<span>EX</span></div>
+  <p>© 2025 Globex Investments. All rights reserved.<br>Your data is encrypted and protected under our privacy policy.</p>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="mailto:supports.globexinvestments@gmail.com">Contact Support</a>
+  </div>
+</footer>
+<script src="apply.js"></script>
+</body>
+</html>
